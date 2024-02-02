@@ -6,20 +6,58 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Displaying username
+name: Maven Build Workflow
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-   
-    - name: Displaying username
-      run: echo "ISHA"
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: Build Maven Project
+      run: mvn clean install
+
+    - name: Display Maven Goals Output
+      run: |
+        mvn --version
+        mvn --activate-profiles display help:describe -Dcmd=clean
+        mvn --activate-profiles display help:describe -Dcmd=validate
+        mvn --activate-profiles display help:describe -Dcmd=initialize
+        mvn --activate-profiles display help:describe -Dcmd=generate-sources
+        mvn --activate-profiles display help:describe -Dcmd=process-sources
+        mvn --activate-profiles display help:describe -Dcmd=generate-resources
+        mvn --activate-profiles display help:describe -Dcmd=process-resources
+        mvn --activate-profiles display help:describe -Dcmd=compile
+        mvn --activate-profiles display help:describe -Dcmd=process-classes
+        mvn --activate-profiles display help:describe -Dcmd=generate-test-sources
+        mvn --activate-profiles display help:describe -Dcmd=process-test-sources
+        mvn --activate-profiles display help:describe -Dcmd=generate-test-resources
+        mvn --activate-profiles display help:describe -Dcmd=process-test-resources
+        mvn --activate-profiles display help:describe -Dcmd=test-compile
+        mvn --activate-profiles display help:describe -Dcmd=test
+        mvn --activate-profiles display help:describe -Dcmd=prepare-package
+        mvn --activate-profiles display help:describe -Dcmd=package
+        mvn --activate-profiles display help:describe -Dcmd=pre-integration-test
+        mvn --activate-profiles display help:describe -Dcmd=integration-test
+        mvn --activate-profiles display help:describe -Dcmd=post-integration-test
+        mvn --activate-profiles display help:describe -Dcmd=verify
+        mvn --activate-profiles display help:describe -Dcmd=install
+        mvn --activate-profiles display help:describe -Dcmd=deploy
+
+
+      
 
    
